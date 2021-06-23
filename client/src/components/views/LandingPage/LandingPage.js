@@ -14,7 +14,7 @@ function LandingPage() {
         Axios.get('/api/video/getvideos')
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data.videos)
+                    console.log(response.data)
                     setVideo(response.data.videos)
                   
                 } else {

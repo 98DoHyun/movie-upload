@@ -30,7 +30,6 @@ function VideoUploadPage(props) {
     const [ThumbnailPath, setThumbnailPath] = useState("")
 
     const handleChangeTitle = (e) => {
-        
         setVideoTitle(e.currentTarget.value)
     }
 
@@ -50,6 +49,7 @@ function VideoUploadPage(props) {
         const config = {
             header: { 'content-type': 'multipart/form-data' }
         }
+        console.log(files)
         formData.append("file", files[0])
 
         Axios.post('/api/video/uploadfiles', formData, config)
@@ -63,7 +63,8 @@ function VideoUploadPage(props) {
                            }
                   
                    setFilePath(response.data.url)
-            Axios.post('/api/video/thumbnail', variable).then(response => {
+            Axios.post('/api/video/thumbnail', variable)
+            .then(response => {
                             if(response.data.success){
                                
                                 setDuration(response.data.fileDuration)
@@ -117,7 +118,7 @@ return (
                     <Dropzone
                         onDrop={onDrop}
                         multiple={false}
-                        maxSize={8000000}
+                        maxSize={800000000}
                       >
                         {({ getRootProps, getInputProps }) => (
                             <div style={{ width: '300px', height: '240px', border: '1px solid lightgray', display: 'flex', alignItems: 'center', justifyContent: 'center' }}

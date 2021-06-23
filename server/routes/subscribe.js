@@ -9,7 +9,7 @@ router.post("/subscribeNumber", (req, res) => {
     .exec((err, subscribe) => {
         if(err) return res.status(400).send(err);
         res.status(200).json({success:true, subscribeNumber: subscribe.length})
-        console.log(req.body.userTo)
+        console.log(subscribe.length)
     })
 
 });

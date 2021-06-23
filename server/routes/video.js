@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Video } = require("../models/Video");
+const {Subscriber} = require("../models/Subscriber")
 const { auth } = require("../middleware/auth");
 const multer = require("multer")
 var ffmpeg = require('fluent-ffmpeg');
@@ -27,26 +28,16 @@ let storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single("file")
 
 router.post('/uploadfiles', (req, res) => {
-
+            
     //클라이언트에서 받은 비디오를 서버에 저장한다
     upload(req, res, err => {
         if (err) {
-            return res.json({ success: false, err })
+            return res.json({ success:false, err })
         }
         return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.filename })
     })
 
 })
-
-router.post('/getVideoDetail', (req, res) => {
-    Video.findOne({ "_Id" : req.body.videoId })
-    .populate('writer')
-    .exec((err, videoDetail) => {
-        if(err) return res.status(400).send(err);
-        res.status(200).json({ success: true,videoDetail })
-    })
-});
-
 
 router.post('/thumbnail', (req, res) => {
     
@@ -100,11 +91,44 @@ router.post('/uploadVideo', (req, res) => {
 router.get('/getvideos', (req, res) => {
     // 비디오를 db에서 가져와서 랜딩 페이지 던저준다
     Video.find()
-        .populate('writer')
-        .exec((err, videos) => {
+    .populate('writer')
+    .exec((err, videos) => {
             if(err) return res.status(400).send(err);
             res.status(200).json({ success: true, videos})
         })
+
+})
+
+router.post('/getVideoDetail', (req, res) => {
+   
+    Video.findOne({ "_id" : req.body.videoId })
+    .populate(`writer`)
+    .exec((err, VideoDetail) => {
+        if(err) return res.status(400).send(err)
+        return res.status(200).json({ success: true, VideoDetail })
+       })
+});
+
+
+router.post('/getSubscriptionvideos', (req, res) => {
+    Subscriber.find({userFrom: req.body.userFrom})
+     .exec((err, subscriberInfo) => {
+         if(err) return res.status(400).send(err);
+
+         let subscribedUser = [];
+         subscriberInfo.map((subscriber, i) => {
+             subscribedUser.push(subscriber.userTo);
+         })
+
+         Video.find({writer: {$in: subscribedUser} })
+         .populate('writer')
+         .exec((err, video) => {
+             if (err) return res.status(400).send(err);
+             res.status(200).json({success: true, video})
+             
+         })
+        
+     })
 
 })
 

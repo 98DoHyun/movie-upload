@@ -12,7 +12,7 @@ const [SubscribeNumber, setSubscribeNumber] = useState(0)
         .then(response => {
             if(response.data.success){
                 setSubscribeNumber(response.data.subscribeNumber)
-                console.log(variable)
+                
             }else{
                 alert('구독자 수 오류')
             }
@@ -23,7 +23,7 @@ const [SubscribeNumber, setSubscribeNumber] = useState(0)
             .then(response => {
                 if(response.data.success){
                     setSubscribed(response.data.subscribed)
-                    console.log(subscribedVariable)
+                   
                 }else{
                     alert("구독자 정보 오류")
                 }
