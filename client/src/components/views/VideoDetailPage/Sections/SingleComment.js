@@ -11,7 +11,7 @@ function SingleComment(props) {
 
 
     const onHandleChange = (event) => {
-        setCommentValue(event.currentTarget.CommentValue)
+        setCommentValue(event.currentTarget.value)
     }
 
     const onClickOpenReply = () => {
@@ -34,6 +34,7 @@ function SingleComment(props) {
                 if(response.data.success) {
                     console.log(response.data.result)
                     setCommentValue("")
+                    setOpenReply(false)
                     props.refrershFunction(response.data.result)
                 }else{
                     alert("댓글 작성 오류")

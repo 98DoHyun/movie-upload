@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import React,{useEffect, useState} from 'react'
 import SingleComment from './SingleComment'
+import ReplyComment from './ReplyComment'
 
 function Comment(props) {
 
@@ -40,7 +41,10 @@ function Comment(props) {
 
             {props.commentList && props.commentList.map((comment, index) => (
                 (!comment.responseTo && 
-                    <SingleComment refrershFunction={props.refrershFunction} comment={comment} postId={videoId}/>
+                    <React.Fragment>
+                        <SingleComment refrershFunction={props.refrershFunction} comment={comment} postId={videoId}/>
+                        <ReplyComment parentCommentId={comment._id} postId={videoId} commentList={props.commentList} refrershFunction={props.refrershFunction}/>
+                    </React.Fragment>
                     )
                      
              ))}
