@@ -4,7 +4,7 @@ import Axios from 'axios';
 import SideVideo from './Sections/SideVideo'
 import Subscribe from './Sections/Subscribe'
 import Comment from './Sections/Comment';
-
+import 좋아요버튼 from './Sections/좋아요버튼'
 
 function VideoDetailPage(props) {
 
@@ -44,7 +44,7 @@ function VideoDetailPage(props) {
             setComments(Comments.concat(newComment))
         }
         if(VideoDetail.writer){
-           const subscribeButton = VideoDetail.writer._id !== localStorage.getItem(`userId`) && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem(`userId`)}/>
+           const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem(`userId`)}/>
 
         return (
             <Row>
@@ -52,7 +52,7 @@ function VideoDetailPage(props) {
                      <div style={{width:'100%' , padding:'2rem 3rem' }}>
                         <video style={{ width:'100%'}} src={`http://localhost:5000/${VideoDetail.filePath}`} controls/>
                          <List.Item                     
-                             actions={[subscribeButton]}                  
+                             actions={[<좋아요버튼 video userId={localStorage.getItem('userId')} videoId={videoId}/>,subscribeButton]}                  
                          >
                                  <List.Item.Meta            
                                      avatar={<Avatar src={VideoDetail.writer.image}/>}

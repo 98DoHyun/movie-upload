@@ -79,7 +79,7 @@ const [SubscribeNumber, setSubscribeNumber] = useState(0)
              }}
            
            >
-            {SubscribeNumber} {Subscribed ? '구독' : '구독중'}
+            {SubscribeNumber} {Subscribed ? '구독중' : '구독'}
            
            </button>
         </div>

@@ -1,6 +1,7 @@
 import React, {useState ,useEffect} from 'react'
 import {Comment,Avatar,Button,Input} from 'antd';
 import Axios from 'axios'
+import 좋아요버튼 from './좋아요버튼';
 
 const {TextArea} = Input
 
@@ -36,7 +37,7 @@ function SingleComment(props) {
                     setCommentValue("")
                     setOpenReply(false)
                     props.refrershFunction(response.data.result)
-                }else{
+                   }else{
                     alert("댓글 작성 오류")
                 }
             })
@@ -44,7 +45,8 @@ function SingleComment(props) {
     }
 
     const actions= [
-        <span onClick={onClickOpenReply} key="comment-basic-reply-to"> 댓글 </span>
+        <좋아요버튼 userId={localStorage.getItem('userId')} commentId={props.comment._id}/>
+        ,<span onClick={onClickOpenReply} key="comment-basic-reply-to"> 댓글 </span>
     ]
 
     return (

@@ -30,11 +30,7 @@ router.post("/getComments", (req, res) => {
 
 })
 
-router.post("/saveComment", (req, res) => {
 
-   
-
-})
 
 
 
